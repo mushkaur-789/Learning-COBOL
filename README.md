@@ -13,3 +13,6 @@ asking 2 times we ask just one time.
 --> ripasso.cbl 
 In this file i did an exercise for myself just to revise few things. 
 The exercise is:    Ask to the user for his name and for his date of birth. From his date of birth calculate the user's age.
+
+--> cbloper.cbl
+In this file i started working on data, operations, how to take input from the user and how to display them. The exercise is about showing to the user a menu of math operations and let him choose which one. After choosing and making sure that the choice is valid i ask to the user input numbers for calculation.
