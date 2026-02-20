@@ -7,17 +7,19 @@
       *INPUT DATA FROM THE USER
        01  THE-CHOICE          PIC 9.
        01  ADD-MORE            PIC X VALUE IS SPACE.
-       01  ENTRY-NUM-1         PIC -Z(6).99.
-       01  ENTRY-NUM-2         PIC -Z(6).99.
+       01  ENTRY-NUM-1         PIC -Z(20).99.
+       01  ENTRY-NUM-2         PIC -Z(20).99.
       *DISPLAY RESULT OF OPERATION
        01  THE-SUM             PIC -Z(20).99.
        01  THE-DIFF            PIC -Z(20).99.
        01  THE-PRODUCT         PIC -Z(20).99.
        01  THE-DIVIDEND        PIC -Z(20).99.
+       01  THE-PERCENTAGE      PIC -Z(20).99.
        01  THE-REMAINDER       PIC 9(6).99.
       *DATA FOR OPERATION
-       01  NUM-1               PIC S9(6)V99.
-       01  NUM-2               PIC S9(6)V99.
+       01  NUM-1               PIC S9(20)V99.
+       01  NUM-2               PIC S9(20)V99.
+       01  NUM-3               PIC S9(20)V99.
        01  THE-RESULT          PIC S9(20)V99 VALUE IS ZERO.
 
        PROCEDURE DIVISION.
@@ -55,9 +57,16 @@
                PERFORM DIV-OPER
            END-IF.
 
-      *     IF THE-CHOICE = 5
-      *         PERFORM PERC-OPER
-      *     END-IF.]*++
+           IF THE-CHOICE = 5
+               DISPLAY "ENTER THE NUMBER:" END-DISPLAY
+               ACCEPT ENTRY-NUM-1 END-ACCEPT
+               MOVE ENTRY-NUM-1 TO NUM-1
+
+               DISPLAY "ENTER THE PERCENTAGE:" END-DISPLAY
+               ACCEPT ENTRY-NUM-2 END-ACCEPT
+               MOVE ENTRY-NUM-2 TO NUM-2
+               PERFORM PERC-OPER
+           END-IF.
 
            IF THE-CHOICE = 0
                PERFORM PROGRAM-END
@@ -166,14 +175,16 @@
            DISPLAY "THE DIVIDEND IS: " THE-DIVIDEND END-DISPLAY.
            DISPLAY "THE REMAINDER IS: " THE-REMAINDER END-DISPLAY.
 
-      *     MOVE THE-REMAINDER TO NUM-1.
-      *     PERFORM ADD-NUMBER.
+       PERC-OPER. 
+           MULTIPLY NUM-1 BY NUM-2
+           GIVING NUM-3 
+           END-MULTIPLY. 
+               
+           DIVIDE NUM-3 BY 100
+           GIVING THE-RESULT 
+           END-DIVIDE.
+           
+           MOVE THE-RESULT TO THE-PERCENTAGE
+           DISPLAY "THE "ENTRY-NUM-2"% OF " ENTRY-NUM-1 " IS: "
+      -    THE-PERCENTAGE END-DISPLAY.
 
-      *     IF ADD-MORE = "Y"
-      *         PERFORM DIV-OPER
-      *     ELSE
-      *         MOVE THE-RESULT TO THE-PRODUCT
-      *         DISPLAY "THE DIVIDEND IS: " THE-DIVIDEND END-DISPLAY
-      *         DISPLAY "THE REMAINDER IS: " THE-REMAINDER END-DISPLAY
-      *         PERFORM PROGRAM-END
-      *     END-IF.
